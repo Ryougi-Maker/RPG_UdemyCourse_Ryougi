@@ -10,6 +10,8 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
     public EntityFX fx { get; private set; }
 
+    public SpriteRenderer sr { get; private set; }
+
     #endregion
     [Header("Knockback info")]
     [SerializeField] protected Vector2 knockbackDirection;
@@ -37,9 +39,10 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-        fx = GetComponentInChildren<EntityFX>();
+        sr = GetComponentInChildren<SpriteRenderer>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        fx = GetComponent<EntityFX>();
     }
 
     protected virtual void Update()
@@ -50,7 +53,6 @@ public class Entity : MonoBehaviour
     {
         fx.StartCoroutine("FlashFX");
         StartCoroutine("HitKnockback");
-        Debug.Log(gameObject.name + "   was damaged");
     }
 
     protected virtual IEnumerator HitKnockback()
@@ -101,14 +103,14 @@ public class Entity : MonoBehaviour
     #endregion
 
     #region Flip
-    public void Flip()
+    public virtual void Flip()
     {
         facingDir *= -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
     }
 
-    public void FlipController(float _x)
+    public virtual void FlipController(float _x)
     {
         if (_x > 0 && !facingRight)
         {
@@ -121,4 +123,16 @@ public class Entity : MonoBehaviour
 
     }
     #endregion
+
+    public void MakeTransparent(bool _isClear)
+    {
+        if(_isClear)
+        {
+            sr.color = Color.clear;
+        }
+        else
+        {
+            sr.color = Color.white;
+        }
+    }
 }

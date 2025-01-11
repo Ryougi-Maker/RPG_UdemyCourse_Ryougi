@@ -9,7 +9,7 @@ public class SkeletonBattleState : EnemyState
     private int moveDir;
     public SkeletonBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Skeleton _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
     {
-        this.enemy = _enemy;
+        enemy = _enemy;
     }
 
     public override void Enter()
@@ -17,6 +17,11 @@ public class SkeletonBattleState : EnemyState
         base.Enter();
         player = PlayerManager.instance.player.transform;
     }
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
     public override void Update()
     {
         base.Update();
@@ -25,7 +30,7 @@ public class SkeletonBattleState : EnemyState
             stateTimer = enemy.battleTime;
             if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
             {
-                if (CanAAttack())
+                if (CanAttack())
                 {
                     stateMachine.ChangeState(enemy.attackState);
                 }
@@ -34,7 +39,7 @@ public class SkeletonBattleState : EnemyState
         }
         else
         {
-            if (stateTimer < 0|| Vector2.Distance(player.transform.position, enemy.transform.position) > 10) 
+            if (stateTimer < 0|| Vector2.Distance(player.transform.position, enemy.transform.position) > 7) 
             {
                 stateMachine.ChangeState(enemy.idleState);
             }
@@ -51,12 +56,8 @@ public class SkeletonBattleState : EnemyState
         enemy.SetVelocity(enemy.moveSpeed * moveDir, rb.velocity.y);
     }
 
-    public override void Exit()
-    {
-        base.Exit();
-    }
 
-    private bool CanAAttack()
+    private bool CanAttack()
     {
         if (Time.time >= enemy.lastTimeAttacked + enemy.attackCooldown)
         {

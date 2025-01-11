@@ -8,8 +8,8 @@ public class EnemyState
     protected EnemyStateMachine stateMachine;
     protected Rigidbody2D rb;
 
-    protected bool triggerCalled;
     private string animBoolName;
+    protected bool triggerCalled;
 
     protected float stateTimer;
 
@@ -35,7 +35,6 @@ public class EnemyState
     public virtual void Exit()
     {
         enemyBase.anim.SetBool(animBoolName, false);
-
     }
 
     public virtual void AnimationFinishTrigger()
