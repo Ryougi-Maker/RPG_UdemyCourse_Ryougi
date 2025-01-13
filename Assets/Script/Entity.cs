@@ -12,6 +12,8 @@ public class Entity : MonoBehaviour
 
     public SpriteRenderer sr { get; private set; }
 
+    public CharacterStats stats { get; private set; }
+
     #endregion
     [Header("Knockback info")]
     [SerializeField] protected Vector2 knockbackDirection;
@@ -43,6 +45,7 @@ public class Entity : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         fx = GetComponent<EntityFX>();
+        stats = GetComponent<CharacterStats>();
     }
 
     protected virtual void Update()
