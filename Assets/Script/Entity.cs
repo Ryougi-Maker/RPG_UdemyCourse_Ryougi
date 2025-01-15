@@ -9,7 +9,6 @@ public class Entity : MonoBehaviour
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     public EntityFX fx { get; private set; }
-
     public SpriteRenderer sr { get; private set; }
     public CharacterStats stats { get; private set; }
     public CapsuleCollider2D cd { get; private set; }
@@ -32,6 +31,8 @@ public class Entity : MonoBehaviour
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
 
+    public System.Action onFlipped;
+
     protected virtual void Awake()
     {
 
@@ -51,11 +52,17 @@ public class Entity : MonoBehaviour
     {
 
     }
-    public virtual void DamageEffect()
+
+    public virtual void SlowEntityBy(float _slowPercentage,float slowDuration)
     {
-        fx.StartCoroutine("FlashFX");
-        StartCoroutine("HitKnockback");
+
     }
+    protected virtual void ReturnDefaultSpeed()
+    {
+        anim.speed = 1;
+    }
+
+    public virtual void DamageImpact() => StartCoroutine("HitKnockback");
 
     protected virtual IEnumerator HitKnockback()
     {
@@ -110,6 +117,9 @@ public class Entity : MonoBehaviour
         facingDir *= -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+
+        if(onFlipped != null) 
+            onFlipped();
     }
 
     public virtual void FlipController(float _x)
@@ -125,18 +135,6 @@ public class Entity : MonoBehaviour
 
     }
     #endregion
-
-    public void MakeTransparent(bool _isClear)
-    {
-        if(_isClear)
-        {
-            sr.color = Color.clear;
-        }
-        else
-        {
-            sr.color = Color.white;
-        }
-    }
 
     public virtual void Die()
     {
