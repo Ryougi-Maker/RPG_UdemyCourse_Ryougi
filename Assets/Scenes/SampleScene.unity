@@ -1217,6 +1217,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24037c5b2d71204c996adbeb4b4293f, type: 2}
   - {fileID: 11400000, guid: e16a2146181e31d49973192eae5e0980, type: 2}
   - {fileID: 11400000, guid: e5985746f356e414dbb39ba871449ca5, type: 2}
+  - {fileID: 11400000, guid: 02ba2d6639cf6b14db933b38b475e352, type: 2}
+  - {fileID: 11400000, guid: 0c30c016c4e2e68439b49ff0bf6cb933, type: 2}
+  - {fileID: 11400000, guid: 57753dfed195abc40bce56709237a50a, type: 2}
+  - {fileID: 11400000, guid: 6627a301f41aaf244bdce57b807b6c91, type: 2}
+  - {fileID: 11400000, guid: f0e8b94d61df4884383a68cc8f4ad4bf, type: 2}
+  - {fileID: 11400000, guid: 40faf042af3509041ba9c0b6172b2202, type: 2}
+  - {fileID: 11400000, guid: bebfb036eb588ef46a955d172f73b071, type: 2}
   equipment: []
   inventory: []
   stash: []
@@ -3609,7 +3616,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 50
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -9268,7 +9275,7 @@ MonoBehaviour:
     baseValue: 10
     modifiers: 
   damage:
-    baseValue: 10
+    baseValue: 15
     modifiers: 
   critChance:
     baseValue: 99
@@ -9277,7 +9284,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 50
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -10209,7 +10216,7 @@ MonoBehaviour:
     baseValue: 10
     modifiers: 
   armor:
-    baseValue: 20
+    baseValue: 50
     modifiers: 0000000000000000
   evasion:
     baseValue: 0

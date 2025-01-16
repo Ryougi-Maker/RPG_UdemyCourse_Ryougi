@@ -13,6 +13,8 @@ public enum EquipmentType
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
+
+    public float itemCooldown;
     public ItemEffect[] itemEffects;
 
     [Header("Major stats")]
@@ -27,7 +29,7 @@ public class ItemData_Equipment : ItemData
     public int critPower;
 
     [Header("Defensive stats")]
-    public int maxHealth;
+    public int Health;
     public int armor;
     public int evasion;
     public int magicResistance;
@@ -61,7 +63,7 @@ public class ItemData_Equipment : ItemData
         playerStats.critChance.AddModifier(critChance);
         playerStats.critPower.AddModifier(critPower);
 
-        playerStats.maxHealth.AddModifier(maxHealth);
+        playerStats.maxHealth.AddModifier(Health);
         playerStats.armor.AddModifier(armor);
         playerStats.evasion.AddModifier(evasion);
         playerStats.magicResistance.AddModifier(magicResistance);
@@ -82,7 +84,7 @@ public class ItemData_Equipment : ItemData
         playerStats.critChance.RemoveModifier(critChance);
         playerStats.critPower.RemoveModifier(critPower);
 
-        playerStats.maxHealth.RemoveModifier(maxHealth);
+        playerStats.maxHealth.RemoveModifier(Health);
         playerStats.armor.RemoveModifier(armor);
         playerStats.evasion.RemoveModifier(evasion);
         playerStats.magicResistance.RemoveModifier(magicResistance);

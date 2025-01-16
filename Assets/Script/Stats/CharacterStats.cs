@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
@@ -80,7 +81,18 @@ public class CharacterStats : MonoBehaviour
             ApplyIgniteDamage();
     }
 
+    public virtual void IncreaseStatBy(int _modifier,float _duration,Stat _statTomodify)
+    {
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statTomodify));
+    }
+    private IEnumerator StatModCoroutine(int _modifier,float _duration,Stat _statToModify)
+    {
+        _statToModify.AddModifier(_modifier);
 
+        yield return new WaitForSeconds(_duration);
+
+        _statToModify.RemoveModifier(_modifier);
+    }
 
     public virtual void DoDamage(CharacterStats _targetStats)
     {
@@ -96,7 +108,8 @@ public class CharacterStats : MonoBehaviour
         }
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
         _targetStats.TakeDamage(totalDamage);
-        //DoMagicalDamage(_targetStats);
+
+        DoMagicalDamage(_targetStats);
     }
 
     #region Magical damage and ailments
@@ -259,6 +272,16 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    public virtual void IncreaseHealthBy(int _amount)
+    {
+        currentHealth += _amount;
+        if(currentHealth>GetMaxHealthValue())
+            currentHealth = GetMaxHealthValue();
+
+        if(onHealthChanged != null)
+            onHealthChanged();
+    }
+
     protected virtual void DecreaseHealthBy(int _damage)
     {
         currentHealth -= _damage;
@@ -267,12 +290,10 @@ public class CharacterStats : MonoBehaviour
             onHealthChanged();
         }
     }
-
     protected virtual void Die()
     {
         isDead = true;
     }
-
     #region Stat calculatioons 
     private int CheckTargetArmor(CharacterStats _targetStats, int totalDamage)
     {
@@ -290,7 +311,6 @@ public class CharacterStats : MonoBehaviour
         _totalMagicalDamage = Mathf.Clamp(_totalMagicalDamage, 0, int.MaxValue);
         return _totalMagicalDamage;
     }
-
     private bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
@@ -305,7 +325,6 @@ public class CharacterStats : MonoBehaviour
         }
         return false;
     }
-
     private bool CanCrit()
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
@@ -323,7 +342,6 @@ public class CharacterStats : MonoBehaviour
 
         return Mathf.RoundToInt(critDamage);
     }
-
     public int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + vitality.GetValue() * 5;
