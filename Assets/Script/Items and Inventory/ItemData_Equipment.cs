@@ -13,6 +13,7 @@ public enum EquipmentType
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
+    public ItemEffect[] itemEffects;
 
     [Header("Major stats")]
     public int strength;
@@ -39,6 +40,13 @@ public class ItemData_Equipment : ItemData
     [Header("Craft requirements")]
     public List<InventoryItem> craftingMaterials;
 
+    public void Effect(Transform _enemyPosition)
+    {
+        foreach(var item in itemEffects)
+        {
+            item.ExecuteEffect(_enemyPosition);
+        }
+    }
 
     public void AddModifiers()
     {
