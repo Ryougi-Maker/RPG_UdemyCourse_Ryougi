@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Thunder claw
-  icon: {fileID: 367297872, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemIcon: {fileID: 397739693, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   dropChance: 0
   equipmentType: 0
+  itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 12365d62464567746a9e5728b287390d, type: 2}
   strength: 0
@@ -26,11 +27,13 @@ MonoBehaviour:
   damage: 10
   critChance: 0
   critPower: 0
-  maxHealth: 0
+  Health: 0
   armor: 0
   evasion: 0
   magicResistance: 0
   fireDamage: 0
   iceDamage: 0
   lightingDamage: 5
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 9e45fcad93ec69c408492c9b763dac82, type: 2}
+    stackSize: 7

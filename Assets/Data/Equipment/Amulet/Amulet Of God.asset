@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Amulet Of God
-  icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemIcon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
   equipmentType: 2
+  itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 12365d62464567746a9e5728b287390d, type: 2}
   strength: 0
@@ -26,7 +27,7 @@ MonoBehaviour:
   damage: 0
   critChance: 0
   critPower: 0
-  maxHealth: 20
+  Health: 0
   armor: 0
   evasion: 0
   magicResistance: 15

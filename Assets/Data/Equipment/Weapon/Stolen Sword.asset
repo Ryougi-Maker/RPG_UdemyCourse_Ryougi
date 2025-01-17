@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Stolen Sword
-  icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemIcon: {fileID: 998750072, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   dropChance: 32
   equipmentType: 0
+  itemCooldown: 0
+  itemEffects: []
   strength: 0
   agility: 5
   intelligence: 0
@@ -24,7 +26,7 @@ MonoBehaviour:
   damage: 12
   critChance: 7
   critPower: 0
-  maxHealth: 0
+  Health: 0
   armor: 0
   evasion: 0
   magicResistance: 0
