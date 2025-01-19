@@ -20,6 +20,7 @@ MonoBehaviour:
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 931454f7ed5840e4583ca50214e52930, type: 2}
+  itemEffectDescription: Unique :Increase evsion on each taken hit
   strength: 0
   agility: 5
   intelligence: 0
@@ -34,4 +35,6 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightingDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 86e869a222e51ad44a80c317e959a57c, type: 2}
+    stackSize: 3

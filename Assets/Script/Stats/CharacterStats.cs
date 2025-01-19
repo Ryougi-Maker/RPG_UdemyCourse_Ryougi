@@ -65,7 +65,7 @@ public class CharacterStats : MonoBehaviour
 
     public System.Action onHealthChanged;
     public bool isDead { get; private set; }
-
+    private bool isVulnerable;
 
     protected virtual void Start()
     {
@@ -97,7 +97,15 @@ public class CharacterStats : MonoBehaviour
         if(isIgnited)
             ApplyIgniteDamage();
     }
+    public void MakeVulnerableFor(float _duration) => StartCoroutine(VulnerableCorutine(_duration));
+    private IEnumerator VulnerableCorutine(float _duration)
+    {
+        isVulnerable = true;
 
+        yield return new WaitForSeconds(_duration);
+
+        isVulnerable = false;
+    }
     public virtual void IncreaseStatBy(int _modifier,float _duration,Stat _statTomodify)
     {
         StartCoroutine(StatModCoroutine(_modifier, _duration, _statTomodify));
@@ -301,6 +309,9 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void DecreaseHealthBy(int _damage)
     {
+        if (isVulnerable)
+            _damage = Mathf.RoundToInt(_damage * 1.1f);
+
         currentHealth -= _damage;
         if(onHealthChanged != null)
         {
@@ -312,7 +323,7 @@ public class CharacterStats : MonoBehaviour
         isDead = true;
     }
     #region Stat calculatioons 
-    private int CheckTargetArmor(CharacterStats _targetStats, int totalDamage)
+    protected int CheckTargetArmor(CharacterStats _targetStats, int totalDamage)
     {
         if (_targetStats.isChilled)
             totalDamage -= Mathf.RoundToInt(_targetStats.armor.GetValue() * .8f);
@@ -328,7 +339,13 @@ public class CharacterStats : MonoBehaviour
         _totalMagicalDamage = Mathf.Clamp(_totalMagicalDamage, 0, int.MaxValue);
         return _totalMagicalDamage;
     }
-    private bool TargetCanAvoidAttack(CharacterStats _targetStats)
+
+    public virtual void OnEvasion()
+    {
+
+    }
+
+    protected bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
         if (isShocked)
@@ -338,11 +355,12 @@ public class CharacterStats : MonoBehaviour
 
         if (Random.Range(0, 100) < totalEvasion)
         {
+            _targetStats.OnEvasion();
             return true;
         }
         return false;
     }
-    private bool CanCrit()
+    protected bool CanCrit()
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
 
@@ -352,7 +370,7 @@ public class CharacterStats : MonoBehaviour
         }
         return false;
     }
-    private int CalculateCriticalDamage(int _damage)
+    protected int CalculateCriticalDamage(int _damage)
     {
         float totalCritPower = (critPower.GetValue() + strength.GetValue()) * .01f;
         float critDamage = _damage * totalCritPower;

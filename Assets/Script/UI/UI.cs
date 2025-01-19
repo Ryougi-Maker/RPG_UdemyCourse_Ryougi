@@ -9,10 +9,15 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject characterUI;
     [SerializeField] private GameObject skillTreeUI;
 
+    public UI_SkillToolTip skillToolTip;
     public UI_ItemToolTip itemToolTip;
     public UI_StatToolTip statToolTip;
     public UI_CraftWindow craftWindow;
 
+    private void Awake()
+    {
+        SwitchTo(skillTreeUI);
+    }
 
     void Start()
     {
