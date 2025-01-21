@@ -11,6 +11,13 @@ public class SaveManager : MonoBehaviour
     private List<ISaveManager> saveManagers;
     private FileDataHandler dataHandler;
 
+    [ContextMenu("delete save file")]
+    public void DeleteSaveData()
+    {
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        dataHandler.Delete();
+    }
+
     private void Awake()
     {
         if (instance != null)
@@ -18,16 +25,13 @@ public class SaveManager : MonoBehaviour
         else
             instance = this;
 
-        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        saveManagers = FindAllSaveManagers();
-        LoadGame();
     }
 
     private void Start()
     {
-        //dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        //saveManagers = FindAllSaveManagers();
-        //LoadGame();
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        saveManagers = FindAllSaveManagers();
+        LoadGame();
     }
     public void NewGame()
     {
@@ -67,5 +71,14 @@ public class SaveManager : MonoBehaviour
         IEnumerable<ISaveManager> saveManagers = FindObjectsOfType<MonoBehaviour>().OfType<ISaveManager>();
 
         return new List<ISaveManager>(saveManagers);
+    }
+
+    public bool HasSaveData()
+    {
+        if(dataHandler.Load()!= null)
+        {
+            return true;
+        }
+        return false;
     }
 }
