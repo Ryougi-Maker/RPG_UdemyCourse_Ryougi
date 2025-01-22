@@ -26,6 +26,7 @@ public class UI : MonoBehaviour
     private void Awake()
     {
         SwitchTo(skillTreeUI);
+        fadeScreen.gameObject.SetActive(true);
     }
 
     void Start()

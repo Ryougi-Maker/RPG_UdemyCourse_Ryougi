@@ -7,8 +7,9 @@ using UnityEditor.Tilemaps;
 
 public class FileDataHandler
 {
-    private string dataDirPath;
-    private string dataFileName;
+    private string dataDirPath = "";
+    private string dataFileName = "";
+
 
     public FileDataHandler(string _dataDirPath, string _dataFileName)
     {
@@ -59,11 +60,12 @@ public class FileDataHandler
                         dataToLoad = reader.ReadToEnd();
                     }
                 }
+
                 loadData = JsonUtility.FromJson<GameData>(dataToLoad);
             }
             catch (Exception e)
             {
-                Debug.LogError("Error on trying to load data from file: " + fullPath + "\n" + e);
+                Debug.Log($"Failed to load game data from:\n{fullPath}\n{e.Message}");
             }
         }
         return loadData;
