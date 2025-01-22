@@ -30,6 +30,7 @@ public class Enemy : Entity
     protected override void Awake()
     {
         base.Awake();
+
         stateMachine = new EnemyStateMachine();
 
         defaultMoveSpeed = moveSpeed;
