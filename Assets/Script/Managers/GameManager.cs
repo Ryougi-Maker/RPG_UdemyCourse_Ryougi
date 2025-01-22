@@ -17,21 +17,11 @@ public class GameManager : MonoBehaviour,ISaveManager
             instance = this;
 
         checkpoints = FindObjectsOfType<Checkpoint>();
-
-
     }
 
     private void Start()
     {
-        //checkpoints = FindObjectsOfType<Checkpoint>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            RestartScene();
-        }
+        
     }
 
     public void RestartScene()

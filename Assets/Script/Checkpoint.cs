@@ -18,7 +18,7 @@ public class Checkpoint : MonoBehaviour
 
     private void Start()
     {
-
+        
     }
 
     [ContextMenu("Generate checkpoint id")]
