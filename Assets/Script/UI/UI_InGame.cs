@@ -18,9 +18,14 @@ public class UI_InGame : MonoBehaviour
     [SerializeField] private Image blackholeImage;
     [SerializeField] private Image flaskImage;
 
-    [SerializeField] private TextMeshProUGUI currentSouls;
-
     private SkillManager skills;
+
+    [Header("souls info")]
+    [SerializeField] private TextMeshProUGUI currentSouls;
+    [SerializeField] private float soulsAmount;
+    [SerializeField] private float increaseRate = 9999;
+
+
     void Start()
     {
         if (playerStats != null)
@@ -31,12 +36,12 @@ public class UI_InGame : MonoBehaviour
 
     void Update()
     {
-        currentSouls.text = PlayerManager.instance.GetCurrency().ToString("#,#");
+        UpdateSoulsUI();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && skills.dash.dashUnlocked)
             SetCooldownOf(dashImage);
 
-        if(Input.GetKeyDown(KeyCode.Q) && skills.parry.parryUnlocked)
+        if (Input.GetKeyDown(KeyCode.Q) && skills.parry.parryUnlocked)
             SetCooldownOf(parryImage);
 
         if (Input.GetKeyDown(KeyCode.F) && skills.crystal.crystalUnlocked)
@@ -45,7 +50,7 @@ public class UI_InGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1) && skills.sword.swordUnlocked)
             SetCooldownOf(swordImage);
 
-        if(Input.GetKeyDown(KeyCode.R) && skills.blackhole.blackholeUnlocked)
+        if (Input.GetKeyDown(KeyCode.R) && skills.blackhole.blackholeUnlocked)
             SetCooldownOf(blackholeImage);
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && Inventory.instance.GetEquipment(EquipmentType.Flask) != null)
@@ -57,6 +62,20 @@ public class UI_InGame : MonoBehaviour
         CheckCooldownOf(swordImage, skills.sword.cooldown);
         CheckCooldownOf(blackholeImage, skills.blackhole.cooldown);
         CheckCooldownOf(flaskImage, Inventory.instance.flaskCooldown);
+    }
+
+    private void UpdateSoulsUI()
+    {
+        if (soulsAmount < PlayerManager.instance.GetCurrency())
+        {
+            soulsAmount += Time.deltaTime * increaseRate;
+        }
+        else
+        {
+            soulsAmount = PlayerManager.instance.GetCurrency();
+        }
+
+        currentSouls.text = ((int)soulsAmount).ToString();
     }
 
     private void UpdateHealthUI()
