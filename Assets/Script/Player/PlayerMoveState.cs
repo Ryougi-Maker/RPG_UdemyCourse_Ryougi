@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMoveState : PlayerGroundedState
@@ -11,11 +12,13 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        AudioManager.instance.PlaySFX(8, null);
     }
 
     public override void Exit()
     {
         base.Exit();
+        AudioManager.instance.StopSFX(8);
     }
 
     public override void Update()

@@ -4,7 +4,7 @@ using TMPro;
 using TreeEditor;
 using UnityEngine;
 
-public class UI : MonoBehaviour
+public class UI : MonoBehaviour, ISaveManager
 {
     [Header("end screen")]
     [SerializeField] private UI_FadeScreen fadeScreen;
@@ -22,6 +22,8 @@ public class UI : MonoBehaviour
     public UI_ItemToolTip itemToolTip;
     public UI_StatToolTip statToolTip;
     public UI_CraftWindow craftWindow;
+
+    [SerializeField] private UI_VolumeSlider[] volumeSettings;
 
     private void Awake()
     {
@@ -70,6 +72,14 @@ public class UI : MonoBehaviour
         }
         if (_menu != null)
         {
+            if (AudioManager.instance == null)
+            {
+                Debug.LogError("AudioManager.instance is null. Ensure AudioManager is initialized before calling PlaySFX.");
+            }
+            else
+            {
+                AudioManager.instance.PlaySFX(5, null);
+            }
             _menu.SetActive(true);
         }
     }
@@ -110,4 +120,27 @@ public class UI : MonoBehaviour
     }
 
     public void RestartGameButton() => GameManager.instance.RestartScene();
+
+    public void LoadData(GameData _data)
+    {
+        foreach (KeyValuePair<string, float> pair in _data.volumeSettings)
+        {
+            foreach(UI_VolumeSlider item in volumeSettings)
+            {
+                if(item.parametr == pair.Key)
+                {
+                    item.LoadSlider(pair.Value);
+                }
+            }
+        }
+    }
+
+    public void SaveData(ref GameData _data)
+    {
+        _data.volumeSettings.Clear();
+        foreach(UI_VolumeSlider item in volumeSettings)
+        {
+            _data.volumeSettings.Add(item.parametr, item.slider.value);
+        }
+    }
 }
